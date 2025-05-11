@@ -11,11 +11,7 @@ export default function Photos() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const router = useRouter()
 
-  // Add actual photo paths inside /public/photos/
   const photos = [
-    { src: "1.jpg", alt: "Photo 1" },
-    { src: "2.jpg", alt: "Photo 2" },
-    { src: "3.jpg", alt: "Photo 3" },
     { src: "1.jpg", alt: "Photo 1" },
     { src: "2.jpg", alt: "Photo 2" },
     { src: "3.jpg", alt: "Photo 3" },
@@ -26,20 +22,19 @@ export default function Photos() {
   }
 
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + photos.length) % photos.length)
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? photos.length - 1 : prevIndex - 1
+    )
   }
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide()
-    }, 3000)
-
+    const interval = setInterval(nextSlide, 3000)
     return () => clearInterval(interval)
-  }, [])
+  }, [currentIndex])
 
   return (
     <main className="min-h-screen bg-gradient-to-r from-pink-100 to-pink-200 flex flex-col items-center justify-center relative overflow-hidden px-4">
-      {/* Floating bubbles background */}
+      {/* Background bubbles */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         {Array.from({ length: 20 }).map((_, i) => (
           <div
@@ -63,25 +58,27 @@ export default function Photos() {
 
       {/* Carousel */}
       <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md aspect-[9/16] mb-8 z-10">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.5 }}
-            className="w-full h-full relative rounded-xl overflow-hidden shadow-xl"
-          >
-            <Image
-              src={photos[currentIndex].src || "/placeholder.svg"}
-              alt={photos[currentIndex].alt}
-              fill
-              className="object-cover"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-pink-900/50 to-transparent" />
-          </motion.div>
-        </AnimatePresence>
+        <div className="relative w-full h-full rounded-xl overflow-hidden shadow-xl">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={photos[currentIndex].src}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.5 }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={photos[currentIndex].src}
+                alt={photos[currentIndex].alt}
+                layout="fill"
+                objectFit="cover"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-pink-900/50 to-transparent" />
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
         {/* Navigation buttons */}
         <button
@@ -99,7 +96,7 @@ export default function Photos() {
         </button>
       </div>
 
-      {/* Button to poetry page */}
+      {/* Poetry Button */}
       <Button
         onClick={() => router.push("/poetry")}
         className="bg-pink-500 hover:bg-pink-600 text-white flex items-center gap-2 z-10"
