@@ -46,8 +46,8 @@ export default function Home() {
 
       <Card className="w-[350px] bg-white/80 backdrop-blur-sm border-pink-300 shadow-lg">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-pink-600">Making sure it's you</CardTitle>
-          <CardDescription className="text-pink-500">Enter our special password to continue</CardDescription>
+          <CardTitle className="text-2xl font-bold text-pink-600">Hello Shumaila! Making sure it's you</CardTitle>
+          <CardDescription className="text-pink-500">Enter password to continue</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
@@ -66,7 +66,7 @@ export default function Home() {
         </CardContent>
         <CardFooter>
           <Button onClick={handleSubmit} className="w-full bg-pink-500 hover:bg-pink-600 text-white">
-            Unlock My Heart
+            Let's goo!!!
           </Button>
         </CardFooter>
       </Card>
