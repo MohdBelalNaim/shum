@@ -44,7 +44,7 @@ export default function Poetry() {
         </Button>
 
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-pink-600 mb-2">Poetry For You</h1>
+          <h1 className="text-4xl font-bold text-pink-600 mb-2">Poetry For Shumaila</h1>
           <p className="text-pink-500">Words from my heart to yours</p>
         </div>
 
